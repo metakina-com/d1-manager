@@ -66,7 +66,11 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		)
 		.bind(...Object.values(data));
 	const result = await statement.run();
-	return json(result);
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
 
 export const PUT: RequestHandler = async ({ url, request, params, locals }) => {
@@ -101,7 +105,11 @@ export const PUT: RequestHandler = async ({ url, request, params, locals }) => {
 		)
 		.bind(...Object.values(data), ...Object.values(where));
 	const result = await statement.run();
-	return json(result);
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
 
 export const DELETE: RequestHandler = async ({ url, params, locals }) => {
@@ -122,7 +130,11 @@ export const DELETE: RequestHandler = async ({ url, params, locals }) => {
 		.prepare(`DELETE FROM \`${params.table}\` WHERE ${where_sql(where)}`)
 		.bind(...Object.values(where));
 	const result = await statement.run();
-	return json(result);
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
 
 function where_sql(where: Record<string, unknown>): string {

@@ -36,5 +36,9 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 	}
 
 	const result = await db.prepare(`DROP TABLE \`${params.table}\``).run();
-	return json(result);
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };

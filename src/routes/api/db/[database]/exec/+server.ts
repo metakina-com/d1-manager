@@ -30,5 +30,9 @@ export const POST: RequestHandler = async ({ request, params, locals, url, fetch
 	}
 
 	const result = await db.exec(query);
-	return json(result);
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
