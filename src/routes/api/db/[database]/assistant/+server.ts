@@ -6,9 +6,16 @@ import type { RequestHandler } from "./$types";
 export const POST: RequestHandler = async ({ params, request, fetch, platform }) => {
 	const aid = await select_backend();
 	if (!aid) {
-		return json({
-			error: "no backend",
-		});
+		return json(
+			{
+				error: "no backend",
+			},
+			{
+				headers: {
+					"Access-Control-Allow-Origin": "*", // 允许所有域名
+				},
+			},
+		);
 	}
 
 	const tables_p = fetch("/api/db/" + params.database).then((r) =>
@@ -72,7 +79,14 @@ write a raw SQL, without comment`;
 
 	const { result } = await get_sql(question);
 
-	return json({
-		sql: result.sql,
-	});
+	return json(
+		{
+			sql: result.sql,
+		},
+		{
+			headers: {
+				"Access-Control-Allow-Origin": "*", // 允许所有域名
+			},
+		},
+	);
 };

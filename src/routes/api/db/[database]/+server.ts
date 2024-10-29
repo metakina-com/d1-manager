@@ -83,7 +83,11 @@ export const GET: RequestHandler = async ({ params, locals, url, fetch, platform
 		});
 
 	log(response);
-	return json(response);
+	return json(response, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
 
 export const POST: RequestHandler = async ({ request, params, locals }) => {
@@ -107,5 +111,10 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 				.join(", ")}) STRICT`,
 		)
 		.run();
-	return json(result);
+
+	return json(result, {
+		headers: {
+			"Access-Control-Allow-Origin": "*", // 允许所有域名
+		},
+	});
 };
